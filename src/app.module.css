@@ -1,0 +1,51 @@
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background-color: white;
+}
+.app {
+	padding: 50px;
+	background-color: #1b1a1a0c;
+	border-radius: 50px;
+}
+
+input {
+	width: 400px;
+	height: 30px;
+	box-sizing: border-box;
+}
+
+input:disabled {
+	background-color: rgba(0, 0, 0, 0.116);
+}
+
+button {
+	align-self: center;
+	width: 200px;
+	height: 30px;
+	margin-top: 15px;
+}
+
+/* button:focus {
+	background-color: #4caf50;
+} */
+
+form {
+	display: flex;
+	flex-direction: column;
+}
+
+.errorLabel {
+	text-align: center;
+	white-space: normal;
+	color: red;
+	margin: 5px 0;
+}
+
+label {
+	margin-bottom: 5px;
+	width: 100%;
+	max-width: 400px;
+}

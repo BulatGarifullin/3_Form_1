@@ -1,20 +1,19 @@
-export const onRepeatPasswordChange = (
-	{ target },
-	{ password, setRepeatPasswordError, setRepeatPassword, buttonRef, repeatPasswordRef },
-) => {
-	setRepeatPassword(target.value);
+export const onRepeatPasswordChange = ({ target }, { updateState, password, buttonRef, repeatPasswordRef }) => {
+	const { name, value } = target;
+
+	updateState(name, value);
 
 	let newError = null;
 	let isValid = true;
 
-	if (target.value !== password) {
+	if (value !== password) {
 		newError = 'Пароль невалидный';
 		isValid = false;
 		repeatPasswordRef.current.style.borderColor = 'red';
-	} else if (!newError && target.value.length && isValid) {
+	} else if (!newError && value.length && isValid) {
 		repeatPasswordRef.current.style.borderColor = '#4caf50';
 		buttonRef.current.focus();
 	}
 
-	setRepeatPasswordError(newError);
+	updateState('repeatPasswordError', newError);
 };

@@ -28,10 +28,6 @@ button {
 	margin-top: 15px;
 }
 
-/* button:focus {
-	background-color: #4caf50;
-} */
-
 form {
 	display: flex;
 	flex-direction: column;

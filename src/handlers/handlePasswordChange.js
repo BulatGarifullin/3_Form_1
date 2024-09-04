@@ -1,24 +1,23 @@
 import { PASSWORD_REGEXP } from '../regexp/PasswordRegexp';
 
-export const onPasswordChange = (
-	{ target },
-	{ setPassword, setPasswordError, setRepeatPassword, setRepeatPasswordError, passwordRef },
-) => {
-	setPassword(target.value);
+export const onPasswordChange = ({ target }, { updateState, passwordRef }) => {
+	const { name, value } = target;
+
+	updateState(name, value);
 
 	let newError = null;
 	let isValid = true;
 
-	if (!PASSWORD_REGEXP.test(target.value)) {
+	if (!PASSWORD_REGEXP.test(value)) {
 		newError =
 			'Пароль должен содержать по крайней мере одно число, одну заглавную и строчную буквы, а также не менее 8 и более символов.';
-		setRepeatPassword('');
-		setRepeatPasswordError('');
+		updateState('repeatPassword', '');
+		updateState('repeatPasswordError', '');
 		isValid = false;
 		passwordRef.current.style.borderColor = 'red';
-	} else if (!newError && target.value.length && isValid) {
+	} else if (!newError && value.length && isValid) {
 		passwordRef.current.style.borderColor = '#4caf50';
 	}
 
-	setPasswordError(newError);
+	updateState('passwordError', newError);
 };

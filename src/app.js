@@ -1,32 +1,26 @@
-import { useState, useRef } from 'react';
 import { AppLayout } from './appLayout';
 import { onSubmit, onEmailChange, onPasswordChange, onRepeatPasswordChange } from './handlers';
+import { useStore } from './hooks/useStore';
+import { useRef } from 'react';
 
 export const App = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [repeatPassword, setRepeatPassword] = useState('');
-	const [emailError, setEmailError] = useState(null);
-	const [passwordError, setPasswordError] = useState(null);
-	const [repeatPasswordError, setRepeatPasswordError] = useState(null);
+	const { getState, updateState, resetState } = useStore();
+	const { email, password, repeatPassword, emailError, passwordError, repeatPasswordError } = getState();
+
 	const buttonRef = useRef(null);
 	const emailRef = useRef(null);
 	const passwordRef = useRef(null);
 	const repeatPasswordRef = useRef(null);
 
 	const state = {
+		updateState,
+		resetState,
 		email,
-		setEmail,
 		password,
-		setPassword,
 		repeatPassword,
-		setRepeatPassword,
 		emailError,
-		setEmailError,
 		passwordError,
-		setPasswordError,
 		repeatPasswordError,
-		setRepeatPasswordError,
 		buttonRef,
 		emailRef,
 		passwordRef,
@@ -34,18 +28,15 @@ export const App = () => {
 	};
 
 	const props = {
+		getState,
+		updateState,
+		resetState,
 		email,
-		setEmail,
 		password,
-		setPassword,
 		repeatPassword,
-		setRepeatPassword,
 		emailError,
-		setEmailError,
 		passwordError,
-		setPasswordError,
 		repeatPasswordError,
-		setRepeatPasswordError,
 		buttonRef,
 		emailRef,
 		passwordRef,

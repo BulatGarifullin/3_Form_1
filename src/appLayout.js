@@ -1,4 +1,4 @@
-import styles from './app.module.css';
+import styles from './App.module.css';
 
 export const AppLayout = ({
 	email,
@@ -50,7 +50,7 @@ export const AppLayout = ({
 						<input
 							disabled={passwordError || !password}
 							value={repeatPassword}
-							name="password"
+							name="repeatPassword"
 							type="password"
 							placeholder="Повторите пароль"
 							onChange={onRepeatPasswordChange}

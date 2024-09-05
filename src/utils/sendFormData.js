@@ -1,3 +1,3 @@
-export const sendFormData = (state) => {
-	console.log(state);
+export const sendFormData = (formData) => {
+	console.log(formData);
 };

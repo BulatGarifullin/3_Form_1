@@ -1,64 +1,28 @@
 import styles from './App.module.css';
 
-export const AppLayout = ({
-	email,
-	password,
-	repeatPassword,
-	emailError,
-	passwordError,
-	repeatPasswordError,
-	onSubmit,
-	onEmailChange,
-	onPasswordChange,
-	onRepeatPasswordChange,
-	buttonRef,
-	emailRef,
-	passwordRef,
-	repeatPasswordRef,
-}) => {
+export const AppLayout = ({ register, handleSubmit, isValid, emailError, passwordError, repeatPasswordError, buttonRef }) => {
 	return (
 		<div className={styles.container}>
 			<div className={styles.app}>
-				<form onSubmit={onSubmit} className={styles.form}>
+				<form onSubmit={handleSubmit} className={styles.form}>
 					<label>
 						{emailError && <div className={styles.errorLabel}>{emailError}</div>}
-						<input
-							value={email}
-							name="email"
-							type="email"
-							placeholder="Введите email"
-							onChange={onEmailChange}
-							required
-							ref={emailRef}
-						></input>
+						<input name="email" type="text" placeholder="Введите email" {...register('email')}></input>
 					</label>
 					<label>
 						{passwordError && <div className={styles.errorLabel}>{passwordError}</div>}
-						<input
-							disabled={emailError || !email}
-							value={password}
-							name="password"
-							type="password"
-							placeholder="Введите пароль"
-							onChange={onPasswordChange}
-							required
-							ref={passwordRef}
-						></input>
+						<input name="password" type="password" placeholder="Введите пароль" {...register('password')}></input>
 					</label>
 					<label>
 						{repeatPasswordError && <div className={styles.errorLabel}>{repeatPasswordError}</div>}
 						<input
-							disabled={passwordError || !password}
-							value={repeatPassword}
 							name="repeatPassword"
 							type="password"
 							placeholder="Повторите пароль"
-							onChange={onRepeatPasswordChange}
-							required
-							ref={repeatPasswordRef}
+							{...register('repeatPassword')}
 						></input>
 					</label>
-					<button ref={buttonRef} type="submit">
+					<button ref={buttonRef} type="submit" disabled={!isValid}>
 						Зарегистрироваться
 					</button>
 				</form>

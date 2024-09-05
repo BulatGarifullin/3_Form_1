@@ -1,50 +1,47 @@
 import { AppLayout } from './appLayout';
-import { onSubmit, onEmailChange, onPasswordChange, onRepeatPasswordChange } from './handlers';
-import { useStore } from './hooks/useStore';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { registrationFieldScheme } from './utils/index';
+import { onSubmit } from './handlers/handleSubmit';
 
 export const App = () => {
-	const { getState, updateState, resetState } = useStore();
-	const { email, password, repeatPassword, emailError, passwordError, repeatPasswordError } = getState();
+	const {
+		register,
+		handleSubmit,
+		formState: { errors, isValid },
+		reset,
+	} = useForm({
+		mode: 'onChange',
+		defaultValues: {
+			email: '',
+			password: '',
+			repeatPassword: '',
+		},
+		resolver: yupResolver(registrationFieldScheme),
+	});
+	const emailError = errors.email?.message;
+	const passwordError = errors.password?.message;
+	const repeatPasswordError = errors.repeatPassword?.message;
 
 	const buttonRef = useRef(null);
-	const emailRef = useRef(null);
-	const passwordRef = useRef(null);
-	const repeatPasswordRef = useRef(null);
 
-	const state = {
-		updateState,
-		resetState,
-		email,
-		password,
-		repeatPassword,
-		emailError,
-		passwordError,
-		repeatPasswordError,
-		buttonRef,
-		emailRef,
-		passwordRef,
-		repeatPasswordRef,
-	};
+	useEffect(() => {
+		if (isValid && buttonRef.current) {
+			buttonRef.current.focus();
+		}
+	}, [isValid]);
 
 	const props = {
-		getState,
-		updateState,
-		resetState,
-		email,
-		password,
-		repeatPassword,
+		register,
+		handleSubmit: handleSubmit((data) => onSubmit(data, reset)),
+		registrationFieldScheme,
+		errors,
+		isValid,
 		emailError,
 		passwordError,
 		repeatPasswordError,
 		buttonRef,
-		emailRef,
-		passwordRef,
-		repeatPasswordRef,
-		onSubmit: (event) => onSubmit(event, state),
-		onEmailChange: ({ target }) => onEmailChange({ target }, state),
-		onPasswordChange: ({ target }) => onPasswordChange({ target }, state),
-		onRepeatPasswordChange: ({ target }) => onRepeatPasswordChange({ target }, state),
 	};
 
 	return <AppLayout {...props} />;
